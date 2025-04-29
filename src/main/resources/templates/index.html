@@ -3,57 +3,10 @@
 <head>
     <meta charset="UTF-8" http-equiv="refresh" content="90">
     <title>Departures</title>
-    <style>
-        /* Basic styling for the page */
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            background-color: #f4f4f9;
-        }
+    <link rel="stylesheet" th:href="@{/css/departures.css}">
 
-        /* Table styling */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #f4f4f9;
-            font-weight: bold;
-        }
-
-        .departure-label {
-            padding: 10px;
-            border-radius: 5px;
-            font-weight: bold;
-            width: 30px;
-            display: block;
-            text-align: center;
-        }
-
-        .label-red {
-            background-color: rgb(227, 6, 19);
-            color: white;
-        }
-
-        .label-green {
-            background-color: rgb(19, 165, 56);
-            color: white;
-        }
-
-        .label-blue {
-            background-color: #00586a;
-            color: white;
-        }
-    </style>
 </head>
+
 <body>
 <h1>Departures</h1>
 <div>Last updated: <span th:text="${lastUpdated}">Zuletzt aktualisiert</span></div>
