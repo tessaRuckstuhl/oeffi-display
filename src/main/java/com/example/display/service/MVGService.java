@@ -53,6 +53,7 @@ public class MVGService {
         String jsonResponse = restTemplate.getForObject(url, String.class);
         String source = "Donnersbergerbrücke";
         return processDepartures(jsonResponse, source);
+
     }
 
     private List<MVGDeparture> processDepartures(String jsonResponse, String source){
