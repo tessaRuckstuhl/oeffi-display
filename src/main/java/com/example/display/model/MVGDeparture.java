@@ -7,13 +7,15 @@ public class MVGDeparture {
     private String realtimeDepartureTime;
     private String label;
     private String source;
+    private Integer diffMinutes;
 
-    public MVGDeparture(String destination, String plannedDepartureTime, String realtimeDepartureTime, String label, String source) {
+    public MVGDeparture(String destination, String plannedDepartureTime, String realtimeDepartureTime, String label, String source, Integer diffMinutes) {
         this.destination = destination;
         this.plannedDepartureTime = plannedDepartureTime;
         this.realtimeDepartureTime = realtimeDepartureTime;
         this.label = label;
         this.source = source;
+        this.diffMinutes = diffMinutes;
     }
 
     public String getDestination() {
@@ -34,6 +36,10 @@ public class MVGDeparture {
 
     public String getSource(){
         return source;
+    }
+
+    public Integer getDiffMinutes(){
+        return diffMinutes;
     }
 
 

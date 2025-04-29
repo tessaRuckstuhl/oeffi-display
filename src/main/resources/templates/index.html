@@ -82,10 +82,12 @@
         <!-- Planned departure time -->
         <td th:text="${departure.plannedDepartureTime}"></td>
         <!-- Realtime departure time (if any) -->
-        <td th:text="${departure.realtimeDepartureTime}"
-            th:style="${departure.realtimeDepartureTime > departure.plannedDepartureTime} ?
+        <td th:style="${departure.realtimeDepartureTime > departure.plannedDepartureTime} ?
               'color: red;' :
-              'color: green;'"></td>
+              'color: green;'">
+            <span th:text="${departure.realtimeDepartureTime}"></span>
+<!--            <span th:text="${departure.diffMinutes > 0? '(+'+departure.diffMinutes.toString()+')': ''}"></span>-->
+        </td>
     </tr>
     </tbody>
 </table>
