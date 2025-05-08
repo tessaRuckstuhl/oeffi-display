@@ -25,8 +25,8 @@
         <!-- The departure label with dynamically added color class -->
         <td>
         <span class="departure-label"
-              th:classappend="${departure.label == '19' ? 'label-red' : (departure.label == '18' ? 'label-green' : (departure.label == '153' || departure.label == '53' || departure.label == '63' ? 'label-blue' : ''))}"
-              th:text="${departure.label}">hi</span>
+              th:classappend="${departure.label == '19' ? 'label-red' : (departure.label == '18' ? 'label-green' : ((departure.label == '153' || departure.label == '53' || departure.label == '63') ? 'label-blue' : 'label-fallback'))}"
+              th:text="${departure.label}"></span>
         </td>
         <!-- Source      -->
         <td th:text="${departure.source}"></td>
