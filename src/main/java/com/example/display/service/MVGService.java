@@ -14,6 +14,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -49,7 +50,7 @@ public class MVGService {
     }
 
     private List<MVGDeparture> getSBahnDepartures(){
-        String url = "https://www.mvg.de/api/bgw-pt/v3/departures?globalId=de:09162:8&limit=100&transportTypes=UBAHN,REGIONAL_BUS,SBAHN";
+        String url = "https://www.mvg.de/api/bgw-pt/v3/departures?globalId=de:09162:8&limit=10&transportTypes=UBAHN,REGIONAL_BUS,SBAHN";
         String jsonResponse = restTemplate.getForObject(url, String.class);
         String source = "Donnersbergerbrücke";
         return processDepartures(jsonResponse, source);
@@ -62,17 +63,25 @@ public class MVGService {
             JsonNode departuresNode = objectMapper.readTree(jsonResponse);
 
             for (JsonNode dep : departuresNode) {
+                String label = dep.path("label").asText();
 
-                String destination = dep.path("destination").asText();
+                if(Objects.equals(dep.path("transportType").asText(), "SBAHN")){
+                    if(!label.matches("S1|S8|S7")){
+                        continue;
+                    }
+                }
+
+                String destination = dep.path("destination").asText().toUpperCase();
                 String plannedDepartureTimeRaw = dep.path("plannedDepartureTime").asText();
                 String realtimeDepartureTimeRaw = dep.path("realtimeDepartureTime").asText();
-                String label = dep.path("label").asText();
 
                 String plannedFormattedTime = formatTime(plannedDepartureTimeRaw);
                 String realtimeFormattedTime = formatTime(realtimeDepartureTimeRaw);
 
                 Integer diffMinutes = calcDiffInMins(plannedDepartureTimeRaw, realtimeDepartureTimeRaw);
-                departures.add(new MVGDeparture(destination, plannedFormattedTime, realtimeFormattedTime, label, source, diffMinutes ));
+//                logger.info("Test");
+//                logger.info(diffMinutes.toString());
+               ; departures.add(new MVGDeparture(destination, plannedFormattedTime, realtimeFormattedTime, label, source, diffMinutes ));
             }
 
         } catch (Exception e) {

@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -21,9 +22,12 @@ public class MVGController {
         List<MVGDeparture> departures = mvgService.getDepartures();
         model.addAttribute("departures", departures);
 
-        LocalDateTime now = LocalDateTime.now();
-        String lastUpdated = now.getHour() + ":" + now.getMinute();
-        model.addAttribute("lastUpdated", lastUpdated);
+        LocalDateTime myDateObj = LocalDateTime.now();
+        System.out.println("Before formatting: " + myDateObj);
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+        String formattedDate = myDateObj.format(myFormatObj);
+        model.addAttribute("lastUpdated", formattedDate);
         return "index";
     }
 

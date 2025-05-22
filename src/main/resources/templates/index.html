@@ -1,46 +1,54 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" http-equiv="refresh" content="90">
+    <meta charset="UTF-8" http-equiv="refresh" content="60">
     <title>Departures</title>
     <link rel="stylesheet" th:href="@{/css/departures.css}">
 
 </head>
 
 <body>
-<h1>Departures</h1>
-<div>Last updated: <span th:text="${lastUpdated}">Zuletzt aktualisiert</span></div>
+<!--<div>Last updated: <span th:text="${lastUpdated}">Zuletzt aktualisiert</span></div>-->
 <table>
-    <thead>
-    <tr>
-        <th>Label</th>
-        <th>From</th>
-        <th>Destination</th>
-        <th>Planned</th>
-        <th>Live</th>
-    </tr>
-    </thead>
     <tbody>
     <tr th:each="departure : ${departures}">
         <!-- The departure label with dynamically added color class -->
         <td>
-        <span class="departure-label"
-              th:classappend="${departure.label == '19' ? 'label-red' : (departure.label == '18' ? 'label-green' : ((departure.label == '153' || departure.label == '53' || departure.label == '63') ? 'label-blue' : 'label-fallback'))}"
-              th:text="${departure.label}"></span>
+            <div style="display: inline-flex; align-items: center; gap: 0.5em;">
+                <span class="departure-label"
+          th:classappend="${departure.label == '19' ? 'label-red' : (departure.label == '18' ? 'label-green' : ((departure.label == '153' || departure.label == '53' || departure.label == '63') ? 'label-blue' : 'label-fallback'))}"
+          th:text="${departure.label}"></span>
+                <div style="display: flex; flex-direction: column;">
+                    <span style="font-weight: bolder; font-size:larger;" th:text="${departure.destination}"></span>
+                    <div style="display: flex; align-items: center; gap: 0.5em;">
+                        <span class="pulsing-dot" th:classappend="${departure.diffMinutes >0?'red':''}"></span>
+                        <span th:text="${departure.diffMinutes > 0 ? 'verspätet' : 'pünktlich'}+' von '+${departure.source} + ' um '+${departure.realtimeDepartureTime}+ ' (geplant eig. um '+${departure.plannedDepartureTime}+')'"
+                              style="font-size: 0.8em; color: gray;"></span>
+                    </div>
+                </div>
+            </div>
         </td>
+
         <!-- Source      -->
-        <td th:text="${departure.source}"></td>
-        <!-- Destination -->
-        <td th:text="${departure.destination}"></td>
+<!--         <td th:text="${departure.source}"></td>-->
         <!-- Planned departure time -->
-        <td th:text="${departure.plannedDepartureTime}"></td>
+<!--        <td th:text="${departure.plannedDepartureTime}"></td>-->
         <!-- Realtime departure time (if any) -->
+        <!--
         <td th:style="${departure.realtimeDepartureTime > departure.plannedDepartureTime} ?
               'color: red;' :
               'color: green;'">
             <span th:text="${departure.realtimeDepartureTime}"></span>
-<!--            <span th:text="${departure.diffMinutes > 0? '(+'+departure.diffMinutes.toString()+')': ''}"></span>-->
+&lt;!&ndash;            <span th:text="${departure.diffMinutes > 0? '(+'+departure.diffMinutes.toString()+')': ''}"></span>&ndash;&gt;
+        </td>-->
+
+        <td>
+                            <span>
+                    <span style="font-size: xx-large; font-weight: bolder;" th:text="${departure.diffMinutes}"></span>
+                    min
+                </span>
         </td>
+
     </tr>
     </tbody>
 </table>
